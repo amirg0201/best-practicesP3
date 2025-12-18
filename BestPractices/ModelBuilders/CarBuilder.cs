@@ -8,9 +8,10 @@ namespace Best_Practices.ModelBuilders
 {
     public class CarBuilder
     {
-        public string Brand = "Ford";
-        public string Model = "Mustang";
-        public string Color = "Red";
+        private string Brand = "Ford";
+        private string Model = "Mustang";
+        private string Color = "Red";
+        private int _year = DateTime.Now.Year;
 
         public CarBuilder SetBrand(string brand)
         {
