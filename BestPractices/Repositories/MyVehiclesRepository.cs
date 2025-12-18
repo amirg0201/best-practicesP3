@@ -23,7 +23,12 @@ namespace Best_Practices.Repositories
 
         public Vehicle Find(string id)
         {
-           return  _memoryCollection.Vehicles.FirstOrDefault(v => v.ID.Equals(new Guid(id)));
+           // DOC: Programación defensiva. Evita crash si el ID no es un GUID válido.
+            if (Guid.TryParse(id, out Guid guidId))
+            {
+                return _memoryCollection.Vehicles.FirstOrDefault(v => v.ID.Equals(guidId));
+            }
+            return null;
         }
 
         public ICollection<Vehicle> GetVehicles()
