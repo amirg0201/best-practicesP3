@@ -27,7 +27,8 @@ namespace Best_Practices.Controllers
         public IActionResult Index()
         {
             var model = new HomeViewModel();
-            model.Vehicles = VehicleCollection.Instance.Vehicles;
+            // DOC: CORRECCIÓN DIP - Usamos el repositorio inyectado, no el Singleton directo.
+            model.Vehicles = _vehicleRepository.GetVehicles();
             string error = Request.Query.ContainsKey("error") ? Request.Query["error"].ToString() : null;
             ViewBag.ErrorMessage = error;
 
@@ -37,7 +38,7 @@ namespace Best_Practices.Controllers
         [HttpGet]
         public IActionResult AddMustang()
         {
-            var factory = new FordMustangCreator();
+            VehicleCreator factory = new FordMustangCreator();
             var vehicle = factory.Create();
             _vehicleRepository.AddVehicle(vehicle);
             return Redirect("/");
@@ -46,7 +47,7 @@ namespace Best_Practices.Controllers
         [HttpGet]
         public IActionResult AddExplorer()
         {
-            var factory = new FordExplorerCreator();
+            VehicleCreator factory = new FordExplorerCreator();
             var vehicle = factory.Create();
             _vehicleRepository.AddVehicle(vehicle);
             return Redirect("/");
@@ -58,6 +59,8 @@ namespace Best_Practices.Controllers
             try
             {
                 var vehicle = _vehicleRepository.Find(id);
+                // DOC: Validación de nulidad (Defensive Programming)
+                if (vehicle == null) throw new Exception("Vehicle not found");
                 vehicle.StartEngine();
                 return Redirect("/");
             }
@@ -76,6 +79,7 @@ namespace Best_Practices.Controllers
             try
             {
                 var vehicle = _vehicleRepository.Find(id);
+                if (vehicle == null) throw new Exception("Vehicle not found");
                 vehicle.AddGas();
                 return Redirect("/");
             }
@@ -92,6 +96,7 @@ namespace Best_Practices.Controllers
             try
             {
                 var vehicle = _vehicleRepository.Find(id);
+                if (vehicle == null) throw new Exception("Vehicle not found");
                 vehicle.StopEngine();
                 return Redirect("/");
             }
