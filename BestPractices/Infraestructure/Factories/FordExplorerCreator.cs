@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Best_Practices.Infraestructure.Factories
 {
-    public class FordExplorerCreator : Creator
+    public class FordExplorerCreator : VehicleCreator
     {
         public override Vehicle Create()
         {
-            var builder = new CarBuilder();
-            return builder
+            return new CarBuilder()
+                .SetBrand("Ford")
                 .SetModel("Explorer")
-                .SetColor("Black")
+                .SetColor("Blue")
                 .Build();
         }
     }

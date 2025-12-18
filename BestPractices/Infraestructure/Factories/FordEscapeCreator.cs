@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Best_Practices.Infraestructure.Factories
 {
-    public class FordMustangCreator : VehicleCreator
+    public class FordEscapeCreator : VehicleCreator
     {
         public override Vehicle Create()
         {
-            // DOC: Usa el Builder para configurar un Mustang estándar
+            // DOC: Implementación específica solicitada por el Arquitecto
             return new CarBuilder()
                 .SetBrand("Ford")
-                .SetModel("Mustang")
+                .SetModel("Escape")
                 .SetColor("Red")
                 .Build();
         }
