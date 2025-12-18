@@ -54,6 +54,15 @@ namespace Best_Practices.Controllers
         }
 
         [HttpGet]
+        public IActionResult AddEscape()
+        {
+            VehicleCreator factory = new FordEscapeCreator();
+            var vehicle = factory.Create();
+            _vehicleRepository.AddVehicle(vehicle);
+            return Redirect("/");
+        }
+
+        [HttpGet]
         public IActionResult StartEngine(string id)
         {
             try
