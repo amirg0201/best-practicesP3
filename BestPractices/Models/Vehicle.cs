@@ -25,7 +25,7 @@ namespace Best_Practices.Models
 
         #region Constructors
 
-        public Vehicle(string color, string brand, string model, double fuelLimit = 10)
+        public Vehicle(string color, string brand, string model, double fuelLimit = 10, int year = 2024)
         {
             ID = Guid.NewGuid();
             Color = color;
