@@ -8,32 +8,42 @@ namespace Best_Practices.ModelBuilders
 {
     public class CarBuilder
     {
-        private string Brand = "Ford";
-        private string Model = "Mustang";
-        private string Color = "Red";
-        private int _year = DateTime.Now.Year;
+        // DOC: Valores por defecto para facilitar la creación
+        private string _brand = "Ford";
+        private string _model = "Mustang";
+        private string _color = "Red";
+        private int _year = DateTime.Now.Year; // DOC: Cumple el requerimiento de "Año Actual"
 
         public CarBuilder SetBrand(string brand)
         {
-            Brand = brand;
+            _brand = brand;
             return this;
         }
 
         public CarBuilder SetModel(string model)
         {
-            Model = model;
+            _model = model;
             return this;
         }
 
         public CarBuilder SetColor(string color)
         {
-            Color = color;
+            _color = color;
             return this;
         }
-        
+
+        // DOC: Método para soportar la nueva propiedad
+        public CarBuilder SetYear(int year)
+        {
+            _year = year;
+            return this;
+        }
+
+        // DOC: Si en el futuro agregan "Sunroof", solo agregamos SetSunroof() aquí
+        // sin romper el constructor de Car.
         public Car Build()
         {
-            return new Car(Color, Brand, Model);
+            return new Car(_color, _brand, _model, _year);
         }
     }
 }
